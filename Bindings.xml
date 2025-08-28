@@ -1,0 +1,59 @@
+<!-- FFXIVCrossHotbar/Bindings.xml -->
+<!-- 版本: 2.0.0 - 全新的24个独立按键绑定 -->
+<Bindings>
+    <!-- 页面切换 -->
+    <Binding name="SWITCHPAGE1" header="FFXIVCROSSHOTBAR">
+        SwitchPage1Button:Click();
+    </Binding>
+    <Binding name="SWITCHPAGE2">
+        SwitchPage2Button:Click();
+    </Binding>
+    <Binding name="SWITCHPAGE3">
+        SwitchPage3Button:Click();
+    </Binding>
+    <Binding name="SWITCHPAGE4">
+        SwitchPage4Button:Click();
+    </Binding>
+    <Binding name="SWITCHPAGE5">
+        SwitchPage5Button:Click();
+    </Binding>
+    <Binding name="SWITCHPAGE6">
+        SwitchPage6Button:Click();
+    </Binding>
+    <Binding name="SWITCHPAGE7">
+        SwitchPage7Button:Click();
+    </Binding>
+    <Binding name="SWITCHPAGE8">
+        SwitchPage8Button:Click();
+    </Binding>
+
+    <!-- LT 技能触发 (CTRL) -->
+    <Binding name="LT_ACTION1"> FFXIVCrossHotbar_LT_Trigger1:Click(); </Binding>
+    <Binding name="LT_ACTION2"> FFXIVCrossHotbar_LT_Trigger2:Click(); </Binding>
+    <Binding name="LT_ACTION3"> FFXIVCrossHotbar_LT_Trigger3:Click(); </Binding>
+    <Binding name="LT_ACTION4"> FFXIVCrossHotbar_LT_Trigger4:Click(); </Binding>
+    <Binding name="LT_ACTION5"> FFXIVCrossHotbar_LT_Trigger5:Click(); </Binding>
+    <Binding name="LT_ACTION6"> FFXIVCrossHotbar_LT_Trigger6:Click(); </Binding>
+    <Binding name="LT_ACTION7"> FFXIVCrossHotbar_LT_Trigger7:Click(); </Binding>
+    <Binding name="LT_ACTION8"> FFXIVCrossHotbar_LT_Trigger8:Click(); </Binding>
+
+    <!-- RT 技能触发 (ALT) -->
+    <Binding name="RT_ACTION1"> FFXIVCrossHotbar_RT_Trigger1:Click(); </Binding>
+    <Binding name="RT_ACTION2"> FFXIVCrossHotbar_RT_Trigger2:Click(); </Binding>
+    <Binding name="RT_ACTION3"> FFXIVCrossHotbar_RT_Trigger3:Click(); </Binding>
+    <Binding name="RT_ACTION4"> FFXIVCrossHotbar_RT_Trigger4:Click(); </Binding>
+    <Binding name="RT_ACTION5"> FFXIVCrossHotbar_RT_Trigger5:Click(); </Binding>
+    <Binding name="RT_ACTION6"> FFXIVCrossHotbar_RT_Trigger6:Click(); </Binding>
+    <Binding name="RT_ACTION7"> FFXIVCrossHotbar_RT_Trigger7:Click(); </Binding>
+    <Binding name="RT_ACTION8"> FFXIVCrossHotbar_RT_Trigger8:Click(); </Binding>
+
+    <!-- LT+RT 技能触发 (CTRL-ALT) -->
+    <Binding name="BOTH_ACTION1"> FFXIVCrossHotbar_BOTH_Trigger1:Click(); </Binding>
+    <Binding name="BOTH_ACTION2"> FFXIVCrossHotbar_BOTH_Trigger2:Click(); </Binding>
+    <Binding name="BOTH_ACTION3"> FFXIVCrossHotbar_BOTH_Trigger3:Click(); </Binding>
+    <Binding name="BOTH_ACTION4"> FFXIVCrossHotbar_BOTH_Trigger4:Click(); </Binding>
+    <Binding name="BOTH_ACTION5"> FFXIVCrossHotbar_BOTH_Trigger5:Click(); </Binding>
+    <Binding name="BOTH_ACTION6"> FFXIVCrossHotbar_BOTH_Trigger6:Click(); </Binding>
+    <Binding name="BOTH_ACTION7"> FFXIVCrossHotbar_BOTH_Trigger7:Click(); </Binding>
+    <Binding name="BOTH_ACTION8"> FFXIVCrossHotbar_BOTH_Trigger8:Click(); </Binding>
+</Bindings>

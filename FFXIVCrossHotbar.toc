@@ -1,0 +1,17 @@
+## Interface: 11200
+## Title: FFXIVCrossHotbar
+## Notes: for Vanilla 1.12
+## Author: Aelinore
+## Version: 1.0.0
+## SavedVariables: CrossHotbarDB
+# 本地化文件
+locales\enUS.lua
+locales\zhCN.lua
+locales\deDE.lua
+locales\frFR.lua
+locales\ruRU.lua
+locales\zhTW.lua
+
+Bindings.xml
+FFXIVCrossHotbar.lua
+FFXIVConfigPanel.lua
