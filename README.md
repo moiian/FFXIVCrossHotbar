@@ -31,7 +31,7 @@ A complete action bar designed to replicate the controller-friendly Cross Hotbar
 
 -   `/ffxhb config`: Toggles the configuration panel.
 
-![4](https://github.com/user-attachments/assets/5480cb92-efd2-4f37-841d-f7eee49b615f)
+![5](https://github.com/user-attachments/assets/e7b0c465-cd63-4ae9-9ad8-8fa2567de1d6)
 
 ---
 
