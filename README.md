@@ -21,7 +21,7 @@ A complete action bar designed to replicate the controller-friendly Cross Hotbar
     -   **LT** -> `Left CTRL`
     -   **RT** -> `Left ALT`
     -   **RB** -> `Left SHIFT`
-    -   **D-Pad & Face Buttons (X,Y,A,B)** -> `1, 2, 3, 4, 5, 6, 7, 8`
+    -   **Face Buttons (X,Y,A,B) & D-Pad** -> `1, 2, 3, 4, 5, 6, 7, 8`
 3.  **Set In-Game Keybindings**:
     -   Log in to the game.
     -   Type `/ffxhb config` to open the settings panel.
@@ -54,7 +54,7 @@ A complete action bar designed to replicate the controller-friendly Cross Hotbar
     -   **LT** -> `左 CTRL`
     -   **RT** -> `左 ALT`
     -   **RB** -> `左 SHIFT`
-    -   **十字键 & XYBA 键** -> `1, 2, 3, 4, 5, 6, 7, 8`
+    -   **XYBA键 & 十字键** -> `1, 2, 3, 4, 5, 6, 7, 8`
 3.  **设定游戏内按键**:
     -   登录游戏。
     -   在聊天框输入 `/ffxhb config` 打开设定面板。
