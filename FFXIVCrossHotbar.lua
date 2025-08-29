@@ -619,6 +619,13 @@ function CH:SetDefaultKeybindings()
         SetBinding("SHIFT-" .. i, "SWITCHPAGE" .. i);
     end
 
+    -- [新增] 添加副移动键位以修复按住 LT (Ctrl) 时的移动锁定问题
+    DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99FFXIVCrossHotbar:|r Applying controller movement fix...");
+    SetBinding("CTRL-W", "MOVEFORWARD");
+    SetBinding("CTRL-S", "MOVEBACKWARD");
+    SetBinding("CTRL-A", "STRAFELEFT");
+    SetBinding("CTRL-D", "STRAFERIGHT");
+
     SaveBindings(GetCurrentBindingSet());
     DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99FFXIVCrossHotbar:|r Default keybindings set successfully!");
     DEFAULT_CHAT_FRAME:AddMessage("A /reload might be needed for changes to appear in the menu.");
