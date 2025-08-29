@@ -12,10 +12,18 @@ if (GetLocale() == "zhCN") then
         ["TAB_MAIN"] = "主页",
         ["TAB_HUD"] = "界面",
         ["TAB_LABEL"] = "标签",
+        ["TAB_KEYBINDING"] = "键位绑定",
 
         -- 主页标签内容
         ["INITIALIZE_KEYS"] = "初始化按键",
         ["INIT_KEYS_DESC"] = "首次使用的用户, 请点击以设置按键绑定。\n然后用软件给手柄映射对应按键。\nShift+1-8对应切换页面1到8",
+        ["OPTION_SET_HUD_KEYBINDING"] = "设置界面键位",
+
+        -- 键位绑定标签内容
+        ["KEYBINDING_DESC_1"] = "[基础]\nA\nLB\nLT\nRT\nLT + RT\nRB\nRB + XYBA←↑→↓\nRB + LB",
+        ["KEYBINDING_DESC_1R"] = "\n跳跃\n选中最近的敌人\n激活左侧热键栏\n激活右侧热键栏\n激活特殊热键栏\n页面修饰键\n切换到1-8页\n切换自动跑步",
+        ["KEYBINDING_DESC_2"] = "[HUD]\n\nX\nY\nB\nD-Pad 左\nD-Pad 上\nD-Pad 右\nD-Pad 下",
+        ["KEYBINDING_DESC_2R"] = "\n\n选中最近的朋友\n切换世界地图\n切换游戏菜单\n切换任务日志\n切换角色面板\n打开所有背包\n切换法术书",
 
         --通用按钮
         ["CLOSE"] = "关闭",

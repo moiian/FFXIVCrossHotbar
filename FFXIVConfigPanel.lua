@@ -1,6 +1,6 @@
 -- FFXIVCrossHotbar/FFXIVConfigPanel.lua
 -- 作者: Aelinore
--- 版本: 1.6.2
+-- 版本: 1.6.4
 -- 描述: FFXIVCrossHotbar 的配置面板UI 
 
 local FFXIV_CP = {}; -- CP for Config Panel
@@ -101,7 +101,8 @@ local function CreateCheck(parent, option)
     lbl:SetJustifyH("LEFT");
 
     cb:SetScript("OnClick", function()
-        SetDBValue(option.key, this:GetChecked());
+        -- [已修复] GetChecked() 返回 1 或 nil，需要转换为 true/false
+        SetDBValue(option.key, (this:GetChecked() == 1));
         if FFXIVCrossHotbar and FFXIVCrossHotbar.RefreshLayout then
             FFXIVCrossHotbar:RefreshLayout();
         end
@@ -116,15 +117,23 @@ end
 function FFXIV_CP:CreatePanel()
     if FFXIVConfigPanelFrame then return end;
     
-    -- [已更新] 本地化表快捷方式, 增加容错处理
-    local L = FFXIV_CP_LOCALS;
-    if not L then
-        DEFAULT_CHAT_FRAME:AddMessage("|cffFFFF00FFXIVCrossHotbar Warning: Localization file for your client language not found. Defaulting to English.|r");
-        -- 创建一个默认的英文本地化表以保证插件能运行
-        L = {
+    -- [已修复] 增强的本地化回退逻辑
+    -- 检查全局本地化表是否存在且不为空
+    if not FFXIV_CP_LOCALS or next(FFXIV_CP_LOCALS) == nil then
+        DEFAULT_CHAT_FRAME:AddMessage("|cffFFFF00FFXIVCrossHotbar Warning: Localization file not found or is empty. Defaulting to English.|r");
+        -- 如果不存在或为空，则创建并设置一个完整的备用(英文)本地化表
+        FFXIV_CP_LOCALS = {
             ["SETTINGS_TITLE"] = "FFXIV Cross Hotbar Settings",
-            ["TAB_MAIN"] = "Main", ["TAB_HUD"] = "HUD", ["TAB_LABEL"] = "Label",
-            ["INITIALIZE_KEYS"] = "Initialize Keys", ["INIT_KEYS_DESC"] = "First time users, please click to setup keybindings.",
+            ["TAB_MAIN"] = "Main", ["TAB_HUD"] = "HUD", ["TAB_LABEL"] = "Label", ["TAB_KEYBINDING"] = "Keybind",
+            ["INITIALIZE_KEYS"] = "Initialize Keys", ["INIT_KEYS_DESC"] = "For first-time users, please click here to set up key bindings.\nThen use the software to map the corresponding buttons on your controller.\nShift+1-8 corresponds to switching between pages 1 to 8.",
+            ["OPTION_SET_HUD_KEYBINDING"] = "Set HUD Keybinding",
+			["KEYBINDING_DESC_1"] = "A\nLB\nLT\nRT\nLT + RT\nRB\nRB + (X,Y,B,A,D-Pad)\nRB + LB",
+			["KEYBINDING_DESC_1R"] = "Jump\nTarget Nearest Enemy\nActivate Left Hotbar\nActivate Right Hotbar\nActivate Special Hotbar\nPage Modifier\nSwitch to Pages 1-8\nToggle Auto-Run",
+			
+			["KEYBINDING_DESC_2"] = "[HUD]\n\nX\nY\nB\nD-Pad Left\nD-Pad Up\nD-Pad Right\nD-Pad Down",
+			["KEYBINDING_DESC_2R"] = "\n\nTarget Nearest Friend\nToggle World Map\nToggle Game Menu\nToggle Quest Log\nToggle Character Pane\nOpen All Bags\nToggle Spellbook",
+
+
             ["CLOSE"] = "Close", ["RESET"] = "Reset",
             ["HEADER_GLOBAL"] = "Global Settings", ["HEADER_BUTTON"] = "Button Settings", ["HEADER_BAR"] = "Bar Settings",
             ["HEADER_LABEL"] = "Label Settings", ["HEADER_INDICATOR"] = "Page Indicator", ["HEADER_SEPARATOR"] = "Separator",
@@ -135,8 +144,9 @@ function FFXIV_CP:CreatePanel()
             ["OPTION_SHOW_INDICATOR"] = "Show Indicator", ["OPTION_INDICATOR_X"] = "Indicator X-Offset", ["OPTION_INDICATOR_Y"] = "Indicator Y-Offset",
             ["OPTION_SHOW_SEPARATOR"] = "Show Separator", ["OPTION_SEPARATOR_WIDTH"] = "Separator Width", ["OPTION_SEPARATOR_HEIGHT"] = "Separator Height", ["INDICATOR_PREFIX"] = "SET"
         };
-        FFXIV_CP_LOCALS = L; -- 将备用表设为全局, 以便其他函数调用
     end
+    
+    local L = FFXIV_CP_LOCALS;
 
     -- [已本地化] 将配置项的 title 和 text 替换为本地化键 (Key)
     local ConfigOptions = {
@@ -219,9 +229,13 @@ function FFXIV_CP:CreatePanel()
     local labelPanel = CreateFrame("Frame", "FFXIVCP_LabelPanel", f);
     labelPanel:SetPoint("TOPLEFT", 12, -60); labelPanel:SetPoint("BOTTOMRIGHT", -12, 12);
     labelPanel:Hide();
+    
+    local keybindingPanel = CreateFrame("Frame", "FFXIVCP_KeybindingPanel", f);
+    keybindingPanel:SetPoint("TOPLEFT", 12, -60); keybindingPanel:SetPoint("BOTTOMRIGHT", -12, 12);
+    keybindingPanel:Hide();
 
     -- 3. 标签页按钮
-    PanelTemplates_SetNumTabs(f, 3);
+    PanelTemplates_SetNumTabs(f, 4);
     local tabMain = CreateFrame("CheckButton", "FFXIVCP_Tab_Main", f, "CharacterFrameTabButtonTemplate");
     tabMain:SetText(L["TAB_MAIN"]);
     tabMain:SetPoint("TOPLEFT", f, "TOPLEFT", 15, 0);
@@ -235,19 +249,26 @@ function FFXIV_CP:CreatePanel()
     tabLabel:SetText(L["TAB_LABEL"]);
     tabLabel:SetPoint("LEFT", tabHUD, "RIGHT", -15, 0);
     
+    local tabKeybinding = CreateFrame("CheckButton", "FFXIVCP_Tab_Keybinding", f, "CharacterFrameTabButtonTemplate");
+    tabKeybinding:SetText(L["TAB_KEYBINDING"]);
+    tabKeybinding:SetPoint("TOPRIGHT", f, "TOPRIGHT", -35, 0);
+    
     local function selectTab(selectedTab)
         tabMain:SetChecked(selectedTab == tabMain);
         tabHUD:SetChecked(selectedTab == tabHUD);
         tabLabel:SetChecked(selectedTab == tabLabel);
+        tabKeybinding:SetChecked(selectedTab == tabKeybinding);
         
         if selectedTab == tabMain then mainPanel:Show() else mainPanel:Hide() end;
         if selectedTab == tabHUD then hudPanel:Show() else hudPanel:Hide() end;
         if selectedTab == tabLabel then labelPanel:Show() else labelPanel:Hide() end;
+        if selectedTab == tabKeybinding then keybindingPanel:Show() else keybindingPanel:Hide() end;
     end
     
     tabMain:SetScript("OnClick", function() selectTab(tabMain) end);
     tabHUD:SetScript("OnClick", function() selectTab(tabHUD) end);
     tabLabel:SetScript("OnClick", function() selectTab(tabLabel) end);
+    tabKeybinding:SetScript("OnClick", function() selectTab(tabKeybinding) end);
 
     -- 4. 填充 "Main" 标签页
     do
@@ -266,22 +287,29 @@ function FFXIV_CP:CreatePanel()
         local initButton = CreateFrame("Button", "FFXIVCP_InitButton", mainPanel, "UIPanelButtonTemplate");
         initButton:SetWidth(150); initButton:SetHeight(25);
         initButton:SetText(L["INITIALIZE_KEYS"]);
-        initButton:SetPoint("CENTER", 0, 100); -- 放置在面板正中
+        initButton:SetPoint("CENTER", 0, 95); -- 稍微下移为勾选框腾出空间
         initButton:SetScript("OnClick", function()
             if FFXIVCrossHotbar and FFXIVCrossHotbar.SetDefaultKeybindings then
                 FFXIVCrossHotbar:SetDefaultKeybindings();
             end
             MainMenuBar:Hide();
         end);
+
+        -- [新增] 创建HUD按键绑定的勾选框
+        local hudCheck, hudCheckLabel = CreateCheck(mainPanel, {
+            key = "global.setHUDKeybinding", 
+            text = "OPTION_SET_HUD_KEYBINDING" 
+        });
+        -- 将勾选框水平居中，并放置在初始化按钮上方
+        hudCheck:SetPoint("BOTTOM", initButton, "TOP", -75, 0);
+        hudCheckLabel:SetPoint("LEFT", hudCheck, "RIGHT", 5, 0);
         
-        -- [新增] 角色头像图片 (位于按钮上方)
+        -- [已更新] 角色头像图片 (位于新勾选按钮上方)
         local avatar = mainPanel:CreateTexture("FFXIVCP_AvatarImage", "ARTWORK");
-        -- !!重要!!: 请将你的头像图片 (e.g., avatar.tga) 放在插件的 media 文件夹内
-        -- 路径示例: "Interface\\AddOns\\FFXIVCrossHotbar\\media\\avatar.tga"
         avatar:SetTexture("Interface\\AddOns\\FFXIVCrossHotbar\\src\\assets\\main\\ffxiv.tga");
         avatar:SetWidth(imageLayout.avatarWidth);
         avatar:SetHeight(imageLayout.avatarHeight);
-        avatar:SetPoint("BOTTOM", initButton, "TOP", 0, imageLayout.avatarSpacing);
+        avatar:SetPoint("BOTTOM", hudCheck, "TOP", 75, imageLayout.avatarSpacing);
 
         -- 初始化按钮下方的描述文字
         local initLabel = mainPanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall");
@@ -290,12 +318,52 @@ function FFXIV_CP:CreatePanel()
 
         -- [新增] 手柄映射图片 (位于文字下方)
         local gamepad = mainPanel:CreateTexture("FFXIVCP_GamepadImage", "ARTWORK");
-        -- !!重要!!: 请将你的手柄图片 (e.g., gamepad.tga) 放在插件的 media 文件夹内
-        -- 路径示例: "Interface\\AddOns\\FFXIVCrossHotbar\\media\\gamepad.tga"
         gamepad:SetTexture("Interface\\AddOns\\FFXIVCrossHotbar\\src\\assets\\main\\gamepad.tga");
         gamepad:SetWidth(imageLayout.gamepadWidth);
         gamepad:SetHeight(imageLayout.gamepadHeight);
         gamepad:SetPoint("TOP", initLabel, "BOTTOM", 0, imageLayout.gamepadSpacing);
+    end
+
+    -- 4.5. 填充 "Keybinding" 标签页
+    do
+        -- 左侧文字标签
+        local keybindLabel1 = keybindingPanel:CreateFontString(nil, "ARTWORK", "GameFontNormal");
+        keybindLabel1:SetPoint("TOPLEFT", 50, -40);
+        keybindLabel1:SetJustifyH("LEFT");
+        keybindLabel1:SetJustifyV("TOP");
+        keybindLabel1:SetText(L["KEYBINDING_DESC_1"]);
+		keybindLabel1:SetTextColor(1, 1, 1);
+		
+		local keybindLabel1R = keybindingPanel:CreateFontString(nil, "ARTWORK", "GameFontNormal");
+        keybindLabel1R:SetPoint("TOPLEFT", keybindLabel1,"TOPRIGHT", 10, 0);
+        keybindLabel1R:SetJustifyH("LEFT");
+        keybindLabel1R:SetJustifyV("TOP");
+        keybindLabel1R:SetText(L["KEYBINDING_DESC_1R"]);
+		keybindLabel1R:SetTextColor(1, 1, 1);
+
+        -- 右侧文字标签
+        local keybindLabel2 = keybindingPanel:CreateFontString(nil, "ARTWORK", "GameFontNormal");
+        keybindLabel2:SetPoint("TOPLEFT", keybindLabel1R, "TOPRIGHT", 60, 0);
+        --keybindLabel2:SetWidth(250);
+        keybindLabel2:SetJustifyH("LEFT");
+        keybindLabel2:SetJustifyV("TOP");
+        keybindLabel2:SetText(L["KEYBINDING_DESC_2"]);
+        keybindLabel2:SetTextColor(1, 1, 1);
+		
+		local keybindLabel2R = keybindingPanel:CreateFontString(nil, "ARTWORK", "GameFontNormal");
+        keybindLabel2R:SetPoint("TOPLEFT", keybindLabel2, "TOPRIGHT", 10, 0);
+        keybindLabel2R:SetWidth(250);
+        keybindLabel2R:SetJustifyH("LEFT");
+        keybindLabel2R:SetJustifyV("TOP");
+        keybindLabel2R:SetText(L["KEYBINDING_DESC_2R"]);
+        keybindLabel2R:SetTextColor(1, 1, 1);		
+		
+        -- 手柄图片
+        local gamepad = keybindingPanel:CreateTexture("FFXIVCP_KeybindGamepadImage", "ARTWORK");
+        gamepad:SetTexture("Interface\\AddOns\\FFXIVCrossHotbar\\src\\assets\\main\\gamepad.tga");
+        gamepad:SetWidth(480);
+        gamepad:SetHeight(240);
+        gamepad:SetPoint("BOTTOM", keybindingPanel, "BOTTOM", 0, 6);
     end
 
     -- 5. 填充 "HUD" 和 "Label" 标签页
@@ -360,6 +428,7 @@ function FFXIV_CP:CreatePanel()
         addControlButtons(mainPanel);
         addControlButtons(hudPanel);
         addControlButtons(labelPanel);
+        addControlButtons(keybindingPanel);
     end
 
     -- 6. OnShow 逻辑
@@ -383,6 +452,13 @@ function FFXIV_CP:CreatePanel()
                     end
                 end
             end
+        end
+
+        -- [新增] 手动更新主面板上勾选框的状态
+        local setHUDValue = GetDBValue("global.setHUDKeybinding");
+        local setHUDCheck = _G["FFXIVCP_Check_global.setHUDKeybinding"];
+        if setHUDCheck and setHUDValue ~= nil then
+            setHUDCheck:SetChecked(setHUDValue);
         end
     end);
 end
@@ -416,3 +492,4 @@ eventFrame:SetScript("OnEvent", function()
         this:UnregisterEvent("ADDON_LOADED");
     end
 end);
+

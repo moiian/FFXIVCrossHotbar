@@ -12,10 +12,19 @@ if (GetLocale() == "enUS") then
         ["TAB_MAIN"] = "Main",
         ["TAB_HUD"] = "HUD",
         ["TAB_LABEL"] = "Label",
+        ["TAB_KEYBINDING"] = "Keybind",
 
         -- Main Tab Content
         ["INITIALIZE_KEYS"] = "Initialize Keys",
         ["INIT_KEYS_DESC"] = "For first-time users, please click here to set up key bindings.\nThen use the software to map the corresponding buttons on your controller.\nShift+1-8 corresponds to switching between pages 1 to 8.",
+        ["OPTION_SET_HUD_KEYBINDING"] = "Set HUD Keybinding",
+
+        -- Keybinding Tab Content
+        ["KEYBINDING_DESC_1"] = "[Base]\nA\nLB\nLT\nRT\nLT + RT\nRB\nRB + XYBA←↑→↓\nRB + LB",
+        ["KEYBINDING_DESC_1R"] = "\nJump\nTarget Nearest Enemy\nActivate Left Hotbar\nActivate Right Hotbar\nActivate Special Hotbar\nPage Modifier\nSwitch to Pages 1-8\nToggle Auto-Run",
+		["KEYBINDING_DESC_2"] = "[HUD]\n\nX\nY\nB\nD-Pad Left\nD-Pad Up\nD-Pad Right\nD-Pad Down",
+		["KEYBINDING_DESC_2R"] = "\n\nTarget Nearest Friend\nToggle World Map\nToggle Game Menu\nToggle Quest Log\nToggle Character Pane\nOpen All Bags\nToggle Spellbook",
+
 
         -- General Buttons
         ["CLOSE"] = "Close",
@@ -65,3 +74,4 @@ if (GetLocale() == "enUS") then
 		["INDICATOR_PREFIX"] = "SET",
     };
 end
+

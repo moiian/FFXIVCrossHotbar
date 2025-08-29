@@ -12,10 +12,18 @@ if (GetLocale() == "zhTW") then
         ["TAB_MAIN"] = "主要",
         ["TAB_HUD"] = "HUD",
         ["TAB_LABEL"] = "標籤",
+        ["TAB_KEYBINDING"] = "按鍵綁定",
 
         -- Main Tab Content
         ["INITIALIZE_KEYS"] = "初始化按鍵",
         ["INIT_KEYS_DESC"] = "首次使用的使用者，請點擊此處設定按鍵綁定。\n然後使用軟體對應您控制器上的按鈕。\nShift+1-8 對應切換 1 至 8 頁。",
+        ["OPTION_SET_HUD_KEYBINDING"] = "設定HUD按鍵",
+
+        -- Keybinding Tab Content
+        ["KEYBINDING_DESC_1"] = "[基礎]\nA\nLB\nLT\nRT\nLT + RT\nRB\nRB + XYBA←↑→↓\nRB + LB",
+        ["KEYBINDING_DESC_1R"] = "\n跳躍\n選取最近的敵人\n啟用左側熱鍵列\n啟用右側熱鍵列\n啟用特殊熱鍵列\n頁面修飾鍵\n切換至 1-8 頁\n切換自動跑步",
+        ["KEYBINDING_DESC_2"] = "[HUD]\n\nX\nY\nB\nD-Pad 左\nD-Pad 上\nD-Pad 右\nD-Pad 下",
+        ["KEYBINDING_DESC_2R"] = "\n\n選取最近的朋友\n切換世界地圖\n切換遊戲選單\n切換任務日誌\n切換角色面板\n打開所有背包\n切換法術書",
 
         -- General Buttons
         ["CLOSE"] = "關閉",

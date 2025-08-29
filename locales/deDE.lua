@@ -12,10 +12,18 @@ if (GetLocale() == "deDE") then
         ["TAB_MAIN"] = "Haupt",
         ["TAB_HUD"] = "HUD",
         ["TAB_LABEL"] = "Beschriftung",
+        ["TAB_KEYBINDING"] = "Tastenbelegung",
 
         -- Main Tab Content
         ["INITIALIZE_KEYS"] = "Tasten initialisieren",
         ["INIT_KEYS_DESC"] = "Für neue Benutzer, bitte klicken Sie hier, um die Tastenbelegungen einzurichten.\nVerwenden Sie dann die Software, um die entsprechenden Tasten auf Ihrem Controller zuzuweisen.\nShift+1-8 entspricht dem Wechsel zwischen den Seiten 1 bis 8.",
+        ["OPTION_SET_HUD_KEYBINDING"] = "HUD-Tastenbelegung festlegen",
+
+        -- Keybinding Tab Content
+        ["KEYBINDING_DESC_1"] = "[Basis]\nA\nLB\nLT\nRT\nLT + RT\nRB\nRB + XYBA←↑→↓\nRB + LB",
+        ["KEYBINDING_DESC_1R"] = "\nSpringen\nNächstes feindliches Ziel anvisieren\nLinke Hotbar aktivieren\nRechte Hotbar aktivieren\nSpezial-Hotbar aktivieren\nSeiten-Modifikator\nZu den Seiten 1-8 wechseln\nAutomatisches Laufen umschalten",
+        ["KEYBINDING_DESC_2"] = "[HUD]\n\nX\nY\nB\nD-Pad Links\nD-Pad Oben\nD-Pad Rechts\nD-Pad Unten",
+        ["KEYBINDING_DESC_2R"] = "\n\nNächsten Freund anvisieren\nWeltkarte umschalten\nSpielmenü umschalten\nQuestlog umschalten\nCharakterfenster umschalten\nAlle Taschen öffnen\nZauberbuch umschalten",
 
         -- General Buttons
         ["CLOSE"] = "Schließen",

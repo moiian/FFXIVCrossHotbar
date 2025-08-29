@@ -12,10 +12,18 @@ if (GetLocale() == "frFR") then
         ["TAB_MAIN"] = "Principal",
         ["TAB_HUD"] = "ATH",
         ["TAB_LABEL"] = "Étiquette",
+        ["TAB_KEYBINDING"] = "Raccourcis",
 
         -- Main Tab Content
         ["INITIALIZE_KEYS"] = "Initialiser les touches",
         ["INIT_KEYS_DESC"] = "Pour les nouveaux utilisateurs, veuillez cliquer ici pour configurer les raccourcis clavier.\nUtilisez ensuite le logiciel pour mapper les boutons correspondants sur votre manette.\nMaj+1-8 correspond au passage entre les pages 1 à 8.",
+        ["OPTION_SET_HUD_KEYBINDING"] = "Définir les raccourcis de l'ATH",
+
+        -- Keybinding Tab Content
+        ["KEYBINDING_DESC_1"] = "[Base]\nA\nLB\nLT\nRT\nLT + RT\nRB\nRB + XYBA←↑→↓\nRB + LB",
+        ["KEYBINDING_DESC_1R"] = "\nSauter\nCibler l'ennemi le plus proche\nActiver la barre de raccourcis gauche\nActiver la barre de raccourcis droite\nActiver la barre de raccourcis spéciale\nModificateur de page\nChanger pour les pages 1-8\nActiver/Désactiver la course auto",
+        ["KEYBINDING_DESC_2"] = "[ATH]\n\nX\nY\nB\nD-Pad Gauche\nD-Pad Haut\nD-Pad Droite\nD-Pad Bas",
+        ["KEYBINDING_DESC_2R"] = "\n\nCibler l'ami le plus proche\nAfficher/Masquer la carte du monde\nAfficher/Masquer le menu du jeu\nAfficher/Masquer le journal de quêtes\nAfficher/Masquer la fenêtre de personnage\nOuvrir tous les sacs\nAfficher/Masquer le livre de sorts",
 
         -- General Buttons
         ["CLOSE"] = "Fermer",

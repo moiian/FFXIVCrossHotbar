@@ -92,6 +92,7 @@ function CH:InitializeDatabase()
             position = { point = "BOTTOM", xOffset = 0, yOffset = 90 },
             debugMode = false,
             hasBeenInitialized = false, 
+            setHUDKeybinding = false, -- 新增的可选按键绑定变量，默认为 true
         },
         bars = {
             showLT = true,
@@ -620,22 +621,32 @@ function CH:SetDefaultKeybindings()
     end
 
     -- [新增] 添加副移动键位以修复按住 LT (Ctrl) 时的移动锁定问题
-    DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99FFXIVCrossHotbar:|r Applying controller movement fix...");
+    --DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99FFXIVCrossHotbar:|r Applying controller movement fix...");
     SetBinding("CTRL-W", "MOVEFORWARD");
     SetBinding("CTRL-S", "MOVEBACKWARD");
     SetBinding("CTRL-A", "STRAFELEFT");
     SetBinding("CTRL-D", "STRAFERIGHT");
+	SetBinding("D", "STRAFERIGHT");
+	SetBinding("A", "STRAFELEFT");
 	SetBinding("4", "JUMP");
-	--SetBinding("3", "TOGGLEGAMEMENU");
-	--SetBinding("2", "TOGGLEWORLDMAP");
-	--SetBinding("1", "TOGGLEQUESTLOG");
-	--SetBinding("5", "TOGGLECHARACTERPANE");
-	--SetBinding("6", "TOGGLEAUTORUN");
-	--SetBinding("7", "TOGGLEBACKPACK");
-	--SetBinding("8", "SITORSTAND");
+	SetBinding("9", "TARGETNEARESTENEMY");
+	SetBinding("ALT-9", "TARGETNEARESTENEMY");
+	SetBinding("CTRL-9", "TARGETNEARESTENEMY");
+	SetBinding("SHIFT-9", "TOGGLEAUTORUN");
+	--可选界面功能
+	if CH.db.global.setHUDKeybinding == true then
+	DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99FFXIVCrossHotbar:|r Applying HUD Keybinding...");
+	SetBinding("3", "TOGGLEGAMEMENU");
+	SetBinding("2", "TOGGLEWORLDMAP");
+	SetBinding("1", "TARGETNEARESTFRIEND");
+	SetBinding("5", "TOGGLEQUESTLOG");
+	SetBinding("6", "TOGGLECHARACTER0");
+	SetBinding("7", "OPENALLBAGS");
+	SetBinding("8", "TOGGLESPELLBOOK");
+	end
 	
     SaveBindings(GetCurrentBindingSet());
-    DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99FFXIVCrossHotbar:|r Default keybindings set successfully!");
+    DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99FFXIVCrossHotbar:|r All keybindings set successfully!");
     DEFAULT_CHAT_FRAME:AddMessage("A /reload might be needed for changes to appear in the menu.");
 end
 
