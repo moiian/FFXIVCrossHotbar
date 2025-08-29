@@ -625,7 +625,15 @@ function CH:SetDefaultKeybindings()
     SetBinding("CTRL-S", "MOVEBACKWARD");
     SetBinding("CTRL-A", "STRAFELEFT");
     SetBinding("CTRL-D", "STRAFERIGHT");
-
+	SetBinding("4", "JUMP");
+	--SetBinding("3", "TOGGLEGAMEMENU");
+	--SetBinding("2", "TOGGLEWORLDMAP");
+	--SetBinding("1", "TOGGLEQUESTLOG");
+	--SetBinding("5", "TOGGLECHARACTERPANE");
+	--SetBinding("6", "TOGGLEAUTORUN");
+	--SetBinding("7", "TOGGLEBACKPACK");
+	--SetBinding("8", "SITORSTAND");
+	
     SaveBindings(GetCurrentBindingSet());
     DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99FFXIVCrossHotbar:|r Default keybindings set successfully!");
     DEFAULT_CHAT_FRAME:AddMessage("A /reload might be needed for changes to appear in the menu.");
