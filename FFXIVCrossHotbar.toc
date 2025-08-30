@@ -1,9 +1,10 @@
 ## Interface: 11200
 ## Title: FFXIVCrossHotbar
-## Notes: for Vanilla 1.12
+## Notes: A complete action bar designed to replicate the FFXIV Cross Hotbar system.
 ## Author: Aelinore
 ## Version: 1.0.0
 ## SavedVariables: CrossHotbarDB
+# Github:https://github.com/moiian/FFXIVCrossHotbar
 # 本地化文件
 locales\enUS.lua
 locales\zhCN.lua

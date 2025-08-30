@@ -1,12 +1,12 @@
 -- FFXIVCrossHotbar/FFXIVCrossHotbar.lua
 -- 作者: Aelinore
--- 版本: 3.1.2
+-- 版本: 3.1.3
 -- 描述: 为技能按钮添加冷却时间数字显示。
 
 -- -----------------------------------------------------------------------------
 -- 调试信息
 -- -----------------------------------------------------------------------------
---DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99FFXIVCrossHotbar: Lua file loaded (v3.1.2).|r")
+--DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99FFXIVCrossHotbar: Lua file loaded (v3.1.3).|r")
 
 -- -----------------------------------------------------------------------------
 -- 按键绑定定义 (全局)
@@ -92,7 +92,7 @@ function CH:InitializeDatabase()
             position = { point = "BOTTOM", xOffset = 0, yOffset = 90 },
             debugMode = false,
             hasBeenInitialized = false, 
-            setHUDKeybinding = false, -- 新增的可选按键绑定变量，默认为 true
+            setHUDKeybinding = true, -- 新增的可选按键绑定变量，默认为 true
         },
         bars = {
             showLT = true,
@@ -326,18 +326,17 @@ function CH:CreateButtonsForBar(parentFrame, namePrefix, actionSlotOffset)
         if btn.Count then btn.Count:Hide() end
         btn.action = actionSlotOffset + i;
         
-        -- [新增] 创建冷却时间文本
--- [新增] 创建冷却时间文本
-        -- [核心修正] 将冷却文本的父级设置为冷却圈框架(btn.cooldown)
+        --  创建冷却时间文本
+        -- 将冷却文本的父级设置为冷却圈框架(btn.cooldown)
         -- 这能保证文本永远绘制在冷却圈的黑色遮罩之上。
         -- 层级可以安全地设置回 OVERLAY，因为它现在是子元素。
         btn.cooldownText = btn.cooldown:CreateFontString(nil, "OVERLAY");
         
         btn.cooldownText:SetFont(CH.db.labels.font, CH.db.labels.fontSize + 2, "OUTLINE");
         
-        -- [核心修正] 因为父级变了，SetPoint也需要相应修改。
+        -- 因为父级变了，SetPoint也需要相应修改。
         -- SetPoint的父级默认就是其创建时的父级(btn.cooldown)，
-        -- 而btn.cooldown和btn的位置大小完全一样，所以我们可以简化SetPoint的写法。
+        -- 而btn.cooldown和btn的位置大小完全一样，所以可以简化SetPoint的写法。
         btn.cooldownText:SetPoint("BOTTOMLEFT", 2, 2);
         
         btn.cooldownText:Hide();
@@ -379,11 +378,11 @@ btn:SetScript("OnUpdate", function()
             local action = btn.action;
             local start, duration, enable = GetActionCooldown(action);
             
-            -- [修正] 检查此格子是否为宏
+            --  检查此格子是否为宏
             local macroText = GetActionText(action);
             if (macroText) then -- 如果 GetActionText 返回了非 nil 值，那么它就是一个宏
                 -- 这是一个简化的宏解析，尝试寻找第一个 /cast 或 /use 命令
-                -- 注意: LUA 5.0 不支持 string.match, 我们用 string.find
+                -- 注意: LUA 5.0 不支持 string.match, 用 string.find
                 local castCommandPos = string.find(macroText, "/cast ");
                 local useCommandPos = string.find(macroText, "/use ");
                 
@@ -622,7 +621,7 @@ function CH:SetDefaultKeybindings()
         SetBinding("SHIFT-" .. i, "SWITCHPAGE" .. i);
     end
 
-    -- [新增] 添加副移动键位以修复按住 LT (Ctrl) 时的移动锁定问题
+    --  添加副移动键位以修复按住 LT (Ctrl) 时的移动锁定问题
     --DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99FFXIVCrossHotbar:|r Applying controller movement fix...");
     SetBinding("CTRL-W", "MOVEFORWARD");
     SetBinding("CTRL-S", "MOVEBACKWARD");
@@ -792,7 +791,7 @@ eventFrame:SetScript("OnEvent", function()
 		this:SetScript("OnUpdate", function(_, elapsed) CH:OnUpdate(elapsed); end)
         this:UnregisterEvent("ADDON_LOADED");
     elseif event == "PLAYER_ENTERING_WORLD" then
-        -- [新增] 检查是否需要弹出配置界面
+        --  检查是否需要弹出配置界面
         if CH.db and CH.db.global and not CH.db.global.hasBeenInitialized then
             if FFXIVConfigPanelFrame then
                 FFXIVConfigPanelFrame:Show();

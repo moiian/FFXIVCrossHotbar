@@ -1,6 +1,6 @@
 -- FFXIVCrossHotbar/FFXIVConfigPanel.lua
 -- 作者: Aelinore
--- 版本: 1.6.4
+-- 版本: 3.1.3
 -- 描述: FFXIVCrossHotbar 的配置面板UI 
 
 local FFXIV_CP = {}; -- CP for Config Panel
@@ -101,7 +101,7 @@ local function CreateCheck(parent, option)
     lbl:SetJustifyH("LEFT");
 
     cb:SetScript("OnClick", function()
-        -- [已修复] GetChecked() 返回 1 或 nil，需要转换为 true/false
+        --  GetChecked() 返回 1 或 nil，需要转换为 true/false
         SetDBValue(option.key, (this:GetChecked() == 1));
         if FFXIVCrossHotbar and FFXIVCrossHotbar.RefreshLayout then
             FFXIVCrossHotbar:RefreshLayout();
@@ -117,7 +117,7 @@ end
 function FFXIV_CP:CreatePanel()
     if FFXIVConfigPanelFrame then return end;
     
-    -- [已修复] 增强的本地化回退逻辑
+    --  增强的本地化回退逻辑
     -- 检查全局本地化表是否存在且不为空
     if not FFXIV_CP_LOCALS or next(FFXIV_CP_LOCALS) == nil then
         DEFAULT_CHAT_FRAME:AddMessage("|cffFFFF00FFXIVCrossHotbar Warning: Localization file not found or is empty. Defaulting to English.|r");
@@ -272,7 +272,7 @@ function FFXIV_CP:CreatePanel()
 
     -- 4. 填充 "Main" 标签页
     do
-        -- [新增] 图片布局配置
+        -- 图片布局配置
         local imageLayout = {
             avatarWidth = 68,
             avatarHeight = 68,
@@ -295,7 +295,7 @@ function FFXIV_CP:CreatePanel()
             MainMenuBar:Hide();
         end);
 
-        -- [新增] 创建HUD按键绑定的勾选框
+        -- 创建HUD按键绑定的勾选框
         local hudCheck, hudCheckLabel = CreateCheck(mainPanel, {
             key = "global.setHUDKeybinding", 
             text = "OPTION_SET_HUD_KEYBINDING" 
@@ -304,7 +304,7 @@ function FFXIV_CP:CreatePanel()
         hudCheck:SetPoint("BOTTOM", initButton, "TOP", -75, 0);
         hudCheckLabel:SetPoint("LEFT", hudCheck, "RIGHT", 5, 0);
         
-        -- [已更新] 角色头像图片 (位于新勾选按钮上方)
+        -- 角色头像图片 (位于新勾选按钮上方)
         local avatar = mainPanel:CreateTexture("FFXIVCP_AvatarImage", "ARTWORK");
         avatar:SetTexture("Interface\\AddOns\\FFXIVCrossHotbar\\src\\assets\\main\\ffxiv.tga");
         avatar:SetWidth(imageLayout.avatarWidth);
@@ -316,7 +316,7 @@ function FFXIV_CP:CreatePanel()
         initLabel:SetPoint("TOP", initButton, "BOTTOM", 0, -10);
         initLabel:SetText(L["INIT_KEYS_DESC"]);
 
-        -- [新增] 手柄映射图片 (位于文字下方)
+        -- 手柄映射图片 (位于文字下方)
         local gamepad = mainPanel:CreateTexture("FFXIVCP_GamepadImage", "ARTWORK");
         gamepad:SetTexture("Interface\\AddOns\\FFXIVCrossHotbar\\src\\assets\\main\\gamepad.tga");
         gamepad:SetWidth(imageLayout.gamepadWidth);
@@ -454,7 +454,7 @@ function FFXIV_CP:CreatePanel()
             end
         end
 
-        -- [新增] 手动更新主面板上勾选框的状态
+        -- 手动更新主面板上勾选框的状态
         local setHUDValue = GetDBValue("global.setHUDKeybinding");
         local setHUDCheck = _G["FFXIVCP_Check_global.setHUDKeybinding"];
         if setHUDCheck and setHUDValue ~= nil then
