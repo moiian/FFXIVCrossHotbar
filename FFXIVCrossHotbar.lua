@@ -538,10 +538,11 @@ function CH:SwitchPage(page)
     CH.state.isBothBarActiveByKeybind = false;
     CH.BothFrame:Hide(); CH.LTFrame:Show(); CH.RTFrame:Show(); CH.Separator:Show();
     CH.PageNumber:SetText(page);
+	--PlaySoundFile("Interface\\AddOns\\FFXIVCrossHotbar\\src\\assets\\main\\RB.mp3");
     if CH.state.currentPage == page then return end
     CH.state.currentPage = page;
     CH:UpdateActionSlots(); CH:UpdateAllButtonDisplays(); CH:UpdateAllButtonStates();
-	--PlaySound("FFXHBRBPageSwitch", "SFX");
+	PlaySoundFile("Interface\\AddOns\\FFXIVCrossHotbar\\src\\assets\\main\\RB.mp3");
     --DEFAULT_CHAT_FRAME:AddMessage("FFXIVCrossHotbar: Switched to Page " .. page);
     CH.state.pageSwitchOccurred = true;
 end
@@ -552,6 +553,7 @@ function CH:SwitchToBothBar()
     CH.LTFrame:Hide(); CH.RTFrame:Hide(); CH.Separator:Hide(); CH.BothFrame:Show();
     CH.state.pageSwitchOccurred = true;
     CH.PageNumber:SetText("8");
+	PlaySoundFile("Interface\\AddOns\\FFXIVCrossHotbar\\src\\assets\\main\\RB.mp3");
     --DEFAULT_CHAT_FRAME:AddMessage("FFXIVCrossHotbar: Switched to LT+RT Bar");
 end
 
